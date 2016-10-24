@@ -4,6 +4,17 @@ import (
 	"fmt"
 )
 
+func foreach(unitl int) {
+	var a int = 1
+START:
+	fmt.Print(a, " ")
+	a++
+	if a < unitl {
+		goto START
+	}
+	fmt.Println("end -------")
+}
+
 func main() {
 
 	ss := []int{1, 2, 3, 4, 5, 6, 7}
@@ -28,5 +39,7 @@ func main() {
 	for k, v := range testmap {
 		fmt.Println(k, "  ", v, "  ", testmap[k])
 	}
+
+	foreach(10)
 
 }
