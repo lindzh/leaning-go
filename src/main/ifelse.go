@@ -4,6 +4,18 @@ import (
 	"fmt"
 )
 
+/**
+ *
+ * 现在竟然可以了
+ */
+func ifelseTest(a int) bool {
+	if a > 100 {
+		return true
+	} else {
+		return false
+	}
+}
+
 func main() {
 
 	a := 99000
@@ -19,5 +31,7 @@ func main() {
 	}
 
 	fmt.Println("hahaha")
+
+	fmt.Println(ifelseTest(100))
 
 }
