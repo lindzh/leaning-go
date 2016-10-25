@@ -24,4 +24,5 @@ func main() {
 	fmt.Println(worker)
 	worker.Work()
 	fmt.Println(worker.Job)
+	worker.SayHello()
 }

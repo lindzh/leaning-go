@@ -42,4 +42,13 @@ func main() {
 
 	foreach(10)
 
+	for dd, v := range ss {
+		r := dd % 2
+		if r == 0 {
+			continue
+		}
+		fmt.Println(v)
+
+	}
+
 }
