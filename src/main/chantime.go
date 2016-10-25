@@ -77,6 +77,11 @@ func iochanTest() {
 	fmt.Println("chan in out started")
 	time.Sleep(time.Duration(10) * time.Second)
 
+	//只能关闭 write chan
+	close(ch.och)
+
+	fmt.Println("chan close finished")
+
 }
 
 func main() {
