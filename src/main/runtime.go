@@ -34,4 +34,5 @@ func main() {
 	time.Sleep(time.Duration(15) * time.Second)
 
 	fmt.Println(runtime.NumGoroutine())
+
 }
