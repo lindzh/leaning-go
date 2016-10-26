@@ -57,6 +57,7 @@ func defaultHandler(response http.ResponseWriter, request *http.Request) {
 
 func StartHttpServer() {
 	var addr = "127.0.0.1:8088"
+	http.Handle("/go/", http.FileServer(http.Dir("/Users/lin/Work/go/example/src/main")))
 	http.HandleFunc("/hello", hello)
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/head", head)
