@@ -48,10 +48,14 @@ func body(response http.ResponseWriter, request *http.Request) {
 }
 
 func cookie(response http.ResponseWriter, request *http.Request) {
-
+	cookie, err := request.Cookie("u_name")
+	fmt.Println("cookie key:uname,value :", cookie.Value)
+	vvck := http.Cookie{Name: "hahah", Value: "", Domain: "localhost"}
+	http.SetCookie(response, vvck)
 }
 
 func defaultHandler(response http.ResponseWriter, request *http.Request) {
+	request.Header["abc"]
 
 }
 
