@@ -5,7 +5,7 @@ import (
 )
 
 type Person struct {
-	Id   int64
+	Id   int64 `ffff`
 	Name string
 	Age  int8
 }
