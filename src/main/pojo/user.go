@@ -6,4 +6,6 @@ type UserInfo struct {
 	Age    int8
 	Mobile string
 	Email  string
+
+	Links []string
 }
