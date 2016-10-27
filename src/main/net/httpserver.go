@@ -47,6 +47,10 @@ func body(response http.ResponseWriter, request *http.Request) {
 
 }
 
+func session(response http.ResponseWriter, request *http.Request) {
+
+}
+
 func cookie(response http.ResponseWriter, request *http.Request) {
 	cookie, err := request.Cookie("u_name")
 	fmt.Println("cookie key:uname,value :", cookie.Value)
