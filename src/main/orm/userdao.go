@@ -9,6 +9,10 @@ type UserInfoDao struct {
 	sql.DB
 }
 
+/*
+插入sql，使用preparedstatement避免sql注入
+返回影响行数，err
+*/
 func (db *UserInfoDao) AddUserInfo(user *pojo.UserInfo) (ret int, err error) {
 	stat, perr := db.Prepare("insert into user_info(id,name,age,mobile,email) values(?,?,?,?,?)")
 	if perr != nil {
@@ -23,6 +27,9 @@ func (db *UserInfoDao) AddUserInfo(user *pojo.UserInfo) (ret int, err error) {
 	return int(c), cerr
 }
 
+/*
+更改，使用preparedstatement 返回影响行数，err
+*/
 func (db *UserInfoDao) UpdateUserInfoByIdAndMobile(user *pojo.UserInfo) (ret int, err error) {
 	stat, perr := db.Prepare("update user_info set age=?,name=?,email=? where id=? and mobile=?")
 	if perr != nil {
@@ -37,22 +44,26 @@ func (db *UserInfoDao) UpdateUserInfoByIdAndMobile(user *pojo.UserInfo) (ret int
 	return int(c), cerr
 }
 
-func parseUserFromRows(rows *sql.Rows) (users []pojo.UserInfo, err error) {
+/*
+select 列表结果集转换  将rows转换为对象列表，没有使用反射，使用对象new再赋值
+*/
+func parseUserFromRows(rows *sql.Rows, initCap int) (users []pojo.UserInfo, err error) {
 	var id int32
 	var name string
 	var email string
 	var age int8
 	var mobile string
-	ret := make([]pojo.UserInfo, 20)
+	ret := make([]pojo.UserInfo, initCap)
 	num := 0
 	for rows.Next() {
+		//scan 查询的顺序必须和select字段顺序一致，不然会出现赋值错误
 		serr := rows.Scan(&id, &name, &age, &mobile, &email)
 		if serr != nil {
 			us := make([]pojo.UserInfo, 0)
 			return us, serr
 		} else {
 			us := pojo.UserInfo{id, name, age, mobile, email}
-			if num > 20 {
+			if num > initCap {
 				ret = append(ret, us)
 				num++
 			} else {
@@ -74,7 +85,7 @@ func (db *UserInfoDao) GetUserInfoById(id int32) (user *pojo.UserInfo, err error
 	if rerr != nil {
 		return nil, rerr
 	}
-	users, uerr := parseUserFromRows(rows)
+	users, uerr := parseUserFromRows(rows, 1)
 	defer stat.Close()
 	if uerr != nil {
 		return nil, uerr
@@ -87,6 +98,9 @@ func (db *UserInfoDao) GetUserInfoById(id int32) (user *pojo.UserInfo, err error
 	}
 }
 
+/*
+通过email 拿到列表，返回对象列表和err
+*/
 func (db *UserInfoDao) GetUserInfoListByEmail(email string) (users []pojo.UserInfo, err error) {
 	stat, perr := db.Prepare("select id,name,age,mobile,email from user_info where email=?")
 	if perr != nil {
@@ -96,7 +110,7 @@ func (db *UserInfoDao) GetUserInfoListByEmail(email string) (users []pojo.UserIn
 	if rerr != nil {
 		return nil, rerr
 	}
-	us, uerr := parseUserFromRows(rows)
+	us, uerr := parseUserFromRows(rows, 20)
 	defer stat.Close()
 	if uerr != nil {
 		return nil, uerr
@@ -105,6 +119,9 @@ func (db *UserInfoDao) GetUserInfoListByEmail(email string) (users []pojo.UserIn
 	}
 }
 
+/*
+使用sql preparedstatment 执行，返回影响行数，err
+*/
 func (db *UserInfoDao) DeleteById(id int32) (c int, err error) {
 	var deleteByIdSQL = "delete from user_info where id=?"
 	stat, perr := db.Prepare(deleteByIdSQL)

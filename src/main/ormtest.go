@@ -10,6 +10,9 @@ import (
 
 var mysqlUrl = "test:test@tcp(127.0.0.1:3306)/test?charset=utf8"
 
+/*
+插入测试用例
+*/
 func addUsers(userInfoDao *orm.UserInfoDao) error {
 	lin := pojo.UserInfo{100, "linlin", 23, "15868884065", "linsony0@163.com"}
 	zhi := pojo.UserInfo{101, "zhizhi", 26, "15867884066", "linsony0@163.com"}
@@ -26,6 +29,9 @@ func addUsers(userInfoDao *orm.UserInfoDao) error {
 	return nil
 }
 
+/*
+查询测试用例  单个和列表
+*/
 func selectTest(userInfoDao *orm.UserInfoDao) error {
 	usr, ierr := userInfoDao.GetUserInfoById(100)
 	fmt.Println(usr, ierr)
@@ -40,6 +46,9 @@ func selectTest(userInfoDao *orm.UserInfoDao) error {
 	}
 }
 
+/*
+更改测试用例
+*/
 func updateTest(userInfoDao *orm.UserInfoDao) error {
 	lin := pojo.UserInfo{100, "linlin", 23, "15868884065", "linsony0@163.com"}
 	lin.Name = "hahah"
@@ -50,6 +59,9 @@ func updateTest(userInfoDao *orm.UserInfoDao) error {
 	return err
 }
 
+/*
+删除测试用例
+*/
 func deleteById(userInfoDao *orm.UserInfoDao) error {
 	c, err := userInfoDao.DeleteById(100)
 	fmt.Println("deleted ", c, err)
