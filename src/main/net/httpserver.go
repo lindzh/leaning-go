@@ -52,14 +52,15 @@ func session(response http.ResponseWriter, request *http.Request) {
 }
 
 func cookie(response http.ResponseWriter, request *http.Request) {
-	cookie, err := request.Cookie("u_name")
+	cookie, _ := request.Cookie("u_name")
 	fmt.Println("cookie key:uname,value :", cookie.Value)
 	vvck := http.Cookie{Name: "hahah", Value: "", Domain: "localhost"}
-	http.SetCookie(response, vvck)
+	http.SetCookie(response, &vvck)
 }
 
 func defaultHandler(response http.ResponseWriter, request *http.Request) {
-	request.Header["abc"]
+	var abc = request.Header["abc"]
+	fmt.Println("http get get header abc:", abc)
 
 }
 
