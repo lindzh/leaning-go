@@ -59,4 +59,5 @@ func main() {
 	delete(mymap, 1) //panic
 
 	fmt.Println(mymap)
+
 }
