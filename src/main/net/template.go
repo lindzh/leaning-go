@@ -51,6 +51,12 @@ func TestObjectAndList() {
 /*
 测试 if else
 */
-func testIfElse() {
+func TestIfElse() {
+	tpl := template.New("hahah")
+	var src string = `hahah today is {{if .friday}} friday. {{else}} hahah{{end}}`
+	tt, _ := tpl.Parse(src)
+	data := make(map[string]interface{})
+	data["friday"] = true
+	tt.Execute(os.Stdout, data)
 
 }

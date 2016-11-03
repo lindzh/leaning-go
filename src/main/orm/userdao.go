@@ -62,7 +62,7 @@ func parseUserFromRows(rows *sql.Rows, initCap int) (users []pojo.UserInfo, err 
 			us := make([]pojo.UserInfo, 0)
 			return us, serr
 		} else {
-			us := pojo.UserInfo{id, name, age, mobile, email}
+			us := pojo.UserInfo{id, name, age, mobile, email,nil}
 			if num > initCap {
 				ret = append(ret, us)
 				num++

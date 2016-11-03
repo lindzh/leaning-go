@@ -6,5 +6,6 @@ import (
 
 func main() {
 	net.TestHello()
-	net.TestObject()
+	net.TestObjectAndList()
+	net.TestIfElse()
 }
