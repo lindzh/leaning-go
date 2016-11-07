@@ -136,3 +136,20 @@ func TestMultipart() {
 
 	fmt.Println(datastr)
 }
+
+func TestTaobaoIP(ip string) string {
+	var requesUrl string = "http://ip.taobao.com/service/getIpInfo.php?ip=" + ip
+	resp, err := http.Get(requesUrl)
+	if err != nil {
+		fmt.Println(err)
+		return ""
+	}
+
+	data, err2 := ioutil.ReadAll(resp.Body)
+	if err2 != nil {
+		fmt.Println(err2)
+		return ""
+	}
+
+	return string(data)
+}
