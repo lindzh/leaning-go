@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 )
 
 //
@@ -152,4 +153,70 @@ func TestTaobaoIP(ip string) string {
 	}
 
 	return string(data)
+}
+
+func TestPostData() {
+	proxy := func(r *http.Request) (*url.URL, error) {
+		return url.Parse("http://127.0.0.1:8888")
+	}
+
+	transport := &http.Transport{Proxy: proxy}
+
+	var requestUrl = "http://gateway.aidaojia.com/gateway"
+
+	var stringBody = `{"a":"test"}`
+
+	// resp, _ := http.Post(requestUrl, "application/json", body)
+
+	req, _ := http.NewRequest("POST", requestUrl, strings.NewReader(stringBody))
+
+	req.Header.Add("Content-Type", "application/json")
+
+	req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36")
+
+	req.Header.Add("Accept", "*/*")
+
+	req.Header.Add("Accept-Encoding", "gzip, deflate")
+
+	req.Header.Add("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
+
+	req.Header.Add("Cache-Control", "no-cache")
+
+	client := &http.Client{Transport: transport}
+
+	// client := http.Client{}
+
+	resp, err := client.Do(req)
+
+	defer resp.Body.Close()
+
+	fmt.Println(err)
+
+	data, _ := ioutil.ReadAll(resp.Body)
+
+	fmt.Println(string(data))
+
+}
+
+func TestPostDo() {
+	client := &http.Client{}
+
+	req, err := http.NewRequest("POST", "http://www.01happy.com/demo/accept.php", strings.NewReader("name=cjb"))
+	if err != nil {
+		// handle error
+	}
+
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("Cookie", "name=anny")
+
+	resp, err := client.Do(req)
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		// handle error
+	}
+
+	fmt.Println(string(body))
 }

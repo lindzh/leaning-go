@@ -15,10 +15,6 @@ func TestTaobao() {
 }
 
 func main() {
-	// TestTaobao()
-
-	net.TestPostData()
-
-	// net.TestPostData()
+	TestTaobao()
 
 }
